@@ -5,6 +5,10 @@
 package com.mycompany.atividade01lp1;
 
 import javax.swing.JLabel;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+
 
 /**
  *
@@ -17,6 +21,8 @@ public class ControleRemoto {
 	private int nSerial;
 	private boolean status;
 	private String carga;
+        
+         
 	
 	//Metodos especiais
 	
@@ -61,7 +67,7 @@ public class ControleRemoto {
 	}
 	
 	//Metodos personalizados
-	// o método Construtor foi comentado para que a funcionalidade possa ser usada no JFrame
+	
 	public ControleRemoto() {
 		status = false;
 		carga = "Pilhas";
