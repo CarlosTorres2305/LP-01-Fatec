@@ -5,6 +5,7 @@
 package com.mycompany.atividade01lp1;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -15,8 +16,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Tela_ControleRemoto extends javax.swing.JFrame {
     ArrayList<ControleRemoto> estoque = new ArrayList<ControleRemoto>();
-    HashSet<String> controller = new HashSet<String>();
-    //HashMap<String, ControleRemoto> = new HashMap<String, ControleRemoto>();
+    HashSet<ControleRemoto> controller = new HashSet<ControleRemoto>();
+    HashMap<String, ControleRemoto> map = new HashMap<String, ControleRemoto>();
 
     /**
      * Creates new form Tela_ControleRemoto
@@ -46,7 +47,9 @@ public class Tela_ControleRemoto extends javax.swing.JFrame {
         txtMostrar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbEstoque = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        txtEquipamento = new javax.swing.JTextField();
+        btnMap = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,6 +80,11 @@ public class Tela_ControleRemoto extends javax.swing.JFrame {
         jLabel4.setText("Carga:");
 
         txtMostrar.setText("Deletar");
+        txtMostrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtMostrarMouseClicked(evt);
+            }
+        });
         txtMostrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtMostrarActionPerformed(evt);
@@ -95,7 +103,7 @@ public class Tela_ControleRemoto extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -104,7 +112,20 @@ public class Tela_ControleRemoto extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbEstoque);
 
-        jButton2.setText("Atualizar");
+        jLabel3.setText("Equipamento: ");
+
+        txtEquipamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEquipamentoActionPerformed(evt);
+            }
+        });
+
+        btnMap.setText("Mapear");
+        btnMap.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnMapMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -115,20 +136,33 @@ public class Tela_ControleRemoto extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtSerial)
-                    .addComponent(txtCor)
-                    .addComponent(txtModelo)
-                    .addComponent(txtCarga, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtMostrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(58, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtSerial)
+                                    .addComponent(txtCor)
+                                    .addComponent(txtModelo)
+                                    .addComponent(txtCarga, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(5, 5, 5)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtEquipamento, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 28, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMostrar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnMap, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,12 +186,16 @@ public class Tela_ControleRemoto extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(txtCarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(42, 42, 42)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(3, 3, 3)
-                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(txtEquipamento, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtMostrar)))
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtMostrar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnMap)))
                 .addContainerGap(331, Short.MAX_VALUE))
         );
 
@@ -172,23 +210,8 @@ public class Tela_ControleRemoto extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSerialActionPerformed
 
-    private void txtMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMostrarActionPerformed
-         ControleRemoto Crt;
-        
-        
-        for (int i=0;i<estoque.size();i++)
-        {
-            
-           /*Crt=(ControleRemoto)estoque.get(i);
-            JOptionPane.showMessageDialog("Numero do controle " + Crt.getnSerial()+
-            "Cor do controle é " + Crt.getCor()+
-            "A carga do controle é " + Crt.getCarga());
-            */
-        }
-        
-    }//GEN-LAST:event_txtMostrarActionPerformed
-
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        //Adiciona na lista
         String cor = txtCor.getText();
         String modelo = txtModelo.getText();
         int serial = Integer.parseInt(txtSerial.getText());
@@ -203,12 +226,14 @@ public class Tela_ControleRemoto extends javax.swing.JFrame {
         DefaultTableModel mode = (DefaultTableModel) tbEstoque.getModel();
         mode.setNumRows(0);
         estoque.add(c);
+        map.put(txtEquipamento.getText(), c);
         for(ControleRemoto pr: estoque){
                 mode.addRow(new Object[]{
                 pr.getCor(),
                 pr.getModelo(),
                 pr.getnSerial(),
                 pr.getCarga()
+                             
             });
         }
         
@@ -217,6 +242,40 @@ public class Tela_ControleRemoto extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void txtMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMostrarActionPerformed
+      
+
+    }//GEN-LAST:event_txtMostrarActionPerformed
+
+    private void txtMostrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtMostrarMouseClicked
+        //Remove da lista
+        int posicao = tbEstoque.getSelectedRow();
+        estoque.remove(posicao);
+
+        DefaultTableModel mode = (DefaultTableModel) tbEstoque.getModel();
+        mode.setNumRows(0);
+
+        for(ControleRemoto pr: estoque){
+            mode.addRow(new Object[]{
+                pr.getCor(),
+                pr.getModelo(),
+                pr.getnSerial(),
+                pr.getCarga()
+            });
+        }
+
+    }//GEN-LAST:event_txtMostrarMouseClicked
+
+    private void txtEquipamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEquipamentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEquipamentoActionPerformed
+
+    private void btnMapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMapMouseClicked
+        // Mapear controles
+        System.out.println(map);
+   
+    }//GEN-LAST:event_btnMapMouseClicked
 
     /**
      * @param args the command line arguments
@@ -254,16 +313,18 @@ public class Tela_ControleRemoto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnMap;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbEstoque;
     private javax.swing.JTextField txtCarga;
     private javax.swing.JTextField txtCor;
+    private javax.swing.JTextField txtEquipamento;
     private javax.swing.JTextField txtModelo;
     private javax.swing.JButton txtMostrar;
     private javax.swing.JTextField txtSerial;
