@@ -1,5 +1,6 @@
 package com.mycompany.atividade01lp1;
 
+
 public class ControleRemoto {
 	private String cor;
 	private String modelo;
